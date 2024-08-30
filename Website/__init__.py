@@ -17,7 +17,7 @@ def init_application():
     from .authenticator import authenticator
     from .home import home_page
     from .profile import display_profile
-    from .models import User, Exercise, Workout
+    from .models import User, Exercises, Workout
     #if(database_exists('mysql+pymysql://tony:Aliame123@localhost/dumbbelldore')):
     #    print('Database already exists!')
     #else:
@@ -35,5 +35,5 @@ def init_application():
     application.register_blueprint(home_page, url_prefix='/') #no prefix
     application.register_blueprint(authenticator, url_prefix= '/')
     application.register_blueprint(display_profile, url_prefix='/')
-    
+
     return application

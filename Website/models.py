@@ -31,12 +31,13 @@ class Workout(db.Model):
     #    back_populates= 'workout_playlist'
     #)
 
-class Exercise(db.Model):
-    __tablename__ = 'Excercise'
+class Exercises(db.Model):
+    __tablename__ = 'Exercises'
     exercise_ID = db.Column(db.Integer, primary_key= True)
     name = db.Column(db.String(255), unique= True)
     level = db.Column(db.String(255))
     description = db.Column(db.String(255))
+    image_resource_path = db.Column(db.String(255))
     #workout_playlist = db.relationship('Workout',
     #                                back_populates= 'exercises'
     #                            )

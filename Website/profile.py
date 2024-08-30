@@ -13,8 +13,8 @@ def user_profile():
     if request.method == 'POST':
         if request.method == 'POST':
             new_goal_weight = request.form.get('newGoalWeight')
-            if new_goal_weight.strip() == "":
-                flash('Goal weight was empty', 'error')
+            if new_goal_weight.strip() == str(current_user.goal_weight).strip():
+                flash(f'Your goal weight is already at {new_goal_weight}!', 'error')
             else:
                 try:
                     current_user.goal_weight = new_goal_weight
