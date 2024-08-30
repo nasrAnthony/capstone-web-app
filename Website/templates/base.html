@@ -26,7 +26,7 @@
           <li class="nav-item"><a class="nav-link" href="{{ url_for('authenticator.sign_up') }}">Sign Up</a></li>
           <li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
           <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
-          <li class="nav-item"><a class="nav-link" href="/search">Search</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% if session['userType'] == 'authenticated' %}/search{% else %}/login{% endif %}">Search</a></li>
           <li class="nav-item"><a class="nav-link" href="{% if session['userType'] == 'authenticated' %}/profile{% else %}/login{% endif %}">Profile</a></li>
         </ul>
       </div>

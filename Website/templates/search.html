@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}Search{% endblock %}
+
+{% block content %}
+<style>
+  /* Previous styles */
+  .form-group {
+    margin-bottom: 1rem;
+  }
+  .exercise-result {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+  }
+  .card {
+    margin-top: 1rem;
+    width: 18rem;
+  }
+</style>
+<form method="POST" style="margin-bottom: 2rem;">
+    <h3 align="center">Exercise Search</h3>
+    <div class="form-group">
+        <label for="exerciseName">Exercise name</label>
+        <input type="text" class="form-control" id="exerciseName" name="exerciseName" placeholder="Enter an exercise name"/>
+    </div>
+    <div class="form-group">
+      <label for="intesitylvl">Intensity level</label>
+      <input type="text" class="form-control" id="intesitylvl" name="intesitylvl" placeholder="Enter an intensity level"/>
+  </div>
+    <button type="submit" class="btn btn-primary">Search</button>
+</form>
+
+{% if exercises %}
+    <div class="exercise-result">
+        {% for exercise in exercises %}
+        <div class="card">
+            <div class="card-body">
+              <h4 class="card-title">{{ exercise.name }}</h4>
+              <p class="card-text">{{ exercise.description }}</p>
+              <p class="card-text">{{ exercise.level }}</p>
+              <a href="" class="btn btn-primary">Launch Exercise</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% else %}
+  {% if display_results %} 
+    <p>No results found.</p>
+  {% endif %}
+{% endif %}
+{% endblock %}
