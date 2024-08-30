@@ -16,6 +16,7 @@ def init_application():
     db.init_app(application)
     from .authenticator import authenticator
     from .home import home_page
+    from .profile import display_profile
     from .models import User, Exercise, Workout
     #if(database_exists('mysql+pymysql://tony:Aliame123@localhost/dumbbelldore')):
     #    print('Database already exists!')
@@ -29,8 +30,10 @@ def init_application():
 
     @login_manager.user_loader
     def load_user(id):
-        return User.query.get(int(id))
+        return User.query.get(id)
     
     application.register_blueprint(home_page, url_prefix='/') #no prefix
     application.register_blueprint(authenticator, url_prefix= '/')
+    application.register_blueprint(display_profile, url_prefix='/')
+    
     return application
