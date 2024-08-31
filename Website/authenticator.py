@@ -26,6 +26,10 @@ def login():
             flash('Unregistered email. Please sign up instead.', category='error')
     return render_template('login.html')
 
+@authenticator.route('/')
+def index():
+    return redirect(url_for('authenticator.login'))
+
 @authenticator.route("/logout")
 @login_required
 def logout():

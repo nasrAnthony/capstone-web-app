@@ -1,38 +1,35 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <!-- Bootstrap 4 CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-    <link
-        rel="stylesheet"
-        href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
-        crossorigin="anonymous"
-    />
-    <!-- Bootstrap JS, Popper.js, and jQuery -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<!--link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
 
-    <title>{% block title %}Home{% endblock %}</title>
-</head>
-<body>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="{% if session['userType'] == 'authenticated' %}/{% else %}/login{% endif %}">DumbbellDore</a>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item"><a class="nav-link" href="{{ url_for('authenticator.sign_up') }}">Sign Up</a></li>
-          <li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
-          <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
-          <li class="nav-item"><a class="nav-link" href="{% if session['userType'] == 'authenticated' %}/search{% else %}/login{% endif %}">Search</a></li>
-          <li class="nav-item"><a class="nav-link" href="{% if session['userType'] == 'authenticated' %}/profile{% else %}/login{% endif %}">Profile</a></li>
+<!-- Load your custom stylesheet last -->
+<link rel="stylesheet" href="./static/style.css">
+
+<nav class="navbar">
+    <div class="container">
+  
+      <div class="navbar-header">
+        <button class="navbar-toggler" data-toggle="open-navbar1">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <a href="{% if session['userType'] == 'authenticated' %}/home{% else %}/login{% endif %}">
+          <h4>Dumbbell<span>dore</span></h4>
+        </a>
+      </div>
+  
+      <div class="navbar-menu" id="open-navbar1">
+        <ul class="navbar-nav">
+          <li><a href="{% if session['userType'] == 'authenticated' %}/home{% else %}/login{% endif %}">Login</a></li>
+          <li><a href="{{ url_for('authenticator.sign_up') }}">Sign Up</a></li>
+          <li><a href="/logout">Logout</a></li>
+          <li><a href="{% if session['userType'] == 'authenticated' %}/search{% else %}/login{% endif %}">Search</a></li>
+          <li><a href="{% if session['userType'] == 'authenticated' %}/profile{% else %}/login{% endif %}">My Profile</a></li>
         </ul>
       </div>
     </div>
   </nav>
-
   {% with messages = get_flashed_messages(with_categories=true) %}
   {% if messages %}
       {% for category, message in messages %}
@@ -54,15 +51,9 @@
       {% endfor %}
   {% endif %}
   {% endwith %}
-
-    <div class="container">
-      {% block content %}
-      {% endblock %}
-    </div>
-
-    <!-- Bootstrap 4 JS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-</body>
-</html>
+  <div class="container">
+    {% block content %}
+    {% endblock %}
+  </div>
+<!-- Load your JavaScript file -->
+<script src="static/script.js"></script>

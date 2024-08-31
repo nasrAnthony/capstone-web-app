@@ -8,6 +8,6 @@ import time, pickle
 
 home_page = Blueprint('home_page', __name__)
 
-@home_page.route("/", methods=['GET', 'POST'])#decorator
+@home_page.route("/home", methods=['GET', 'POST'])#decorator
 def home():
     return render_template('home.html')
