@@ -25,6 +25,6 @@ def exercise_landing_page():
     if request.method == 'POST':
         exercise_name = request.form['exercise_name']
         print(exercise_name)
-        #send_script_request_to_pi(exercise_name)
+        send_script_request_to_pi(exercise_name)
     return render_template('exercise_landing.html')
 
