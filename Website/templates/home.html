@@ -1,11 +1,27 @@
-{% extends "base.html" %} {% block title %}Home{% endblock %}
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Basic Page</title>
-</head>
-<body>
-    <h1>LAUNCH EXERCISE</h1>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block title %}
+Home
+{% endblock %}
+
+{% block content %}
+  <h1>EXERCISES</h1>
+
+  <!-- Exercises Section -->
+  <section class="exercises">
+    <div class="exercise">
+      <img src="{{ url_for('static', filename='images/shoulder_press.png') }}" alt="Shoulder Press" class="exercise-img">
+      <div class="exercise-info">
+        <h3>Shoulder Press</h3>
+        <p>Improve your shoulder strength and stability with this classic exercise.</p>
+      </div>
+    </div>
+    <div class="exercise">
+      <img src="{{ url_for('static', filename='images/chest_press.png') }}" alt="Chest Press" class="exercise-img">
+      <div class="exercise-info">
+        <h3>Chest Press</h3>
+        <p>Enhance your chest muscles and upper body strength with this effective move.</p>
+      </div>
+    </div>
+  </section>
+{% endblock %}
