@@ -26,7 +26,7 @@ class User(db.Model, UserMixin):
 
 class Split(db.Model):
     __tablename__ = 'Split'
-    split_ID = db.Column(db.Integer, primary_key= True)
+    split_ID = db.Column(db.String(255), primary_key= True)
     split_name = db.Column(db.String(255), unique= True)
     user_id = db.Column(db.String(255), db.ForeignKey('User.id'), nullable=False)
     content = db.Column(JSON, nullable=False, default={})

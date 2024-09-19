@@ -1,7 +1,8 @@
 from . import db
 from flask import Blueprint, render_template, request, flash, redirect, url_for, session
 from flask_login import login_user, login_required, logout_user, current_user, login_manager
-from .models import User
+from .models import User, Split
+from datetime import datetime
 import pickle
 
 
@@ -16,17 +17,31 @@ def splits():
 @login_required
 def create_splits():
     if request.method == 'POST':
-        split_data = request.get_json()  # Get the JSON data from the request
+        split_data = request.get_json()  
+        current_time = datetime.now().strftime("%Y%m%d%H%M%S")
+        split_id  = f"{current_user.id}_{current_time}"
+        existing_split = Split.query.filter_by(user_id=current_user.id).first()
 
-        # Process the split_data here (e.g., store it in the database)
-        # For example:
-        for day, exercises in split_data.items():
-            print(f"{day}: {exercises}")  # For debugging purposes
+        if existing_split:
+            existing_split.split_ID = split_id
+            existing_split.content = split_data
+            db.session.commit()
+            flash('Workout split updated successfully!', 'success')
+        else:
+            new_split = Split(
+                split_ID=split_id,
+                split_name=f"Split_{current_time}", 
+                user_id=current_user.id,
+                content=split_data 
+            )
+            try:
+                db.session.add(new_split)
+                db.session.commit()
+                flash('Workout split created successfully!', 'success')
 
-        flash('Workout split created successfully!', 'success')
-
-        # Redirect to another page (e.g., back to the splits page)
-        return redirect(url_for('splits.splits'))
+            except Exception as e:
+                flash('Failed to create split. Try again.', 'error')
+        return redirect(url_for('splits.splits')) #refresh page? maybe not needed...
 
 
 
