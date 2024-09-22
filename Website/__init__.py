@@ -18,7 +18,8 @@ def init_application():
     from .home import home_page
     from .profile import display_profile
     from .search_engine import search_page
-    from .models import User, Exercises, Workout
+    from .splits import splits_page
+    from .models import User, Exercises, Split
     from .exercise_landing import exercise_landing
     #if(database_exists('mysql+pymysql://tony:Aliame123@localhost/dumbbelldore')):
     #    print('Database already exists!')
@@ -34,10 +35,11 @@ def init_application():
     def load_user(id):
         return User.query.get(id)
     
-    application.register_blueprint(home_page, url_prefix='/') #no prefix
+    application.register_blueprint(home_page, url_prefix='/')
     application.register_blueprint(authenticator, url_prefix= '/')
     application.register_blueprint(display_profile, url_prefix='/')
     application.register_blueprint(search_page, url_prefix='/') 
     application.register_blueprint(exercise_landing, url_prefix='/')
+    application.register_blueprint(splits_page, url_prefix='/')
 
     return application
