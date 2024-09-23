@@ -16,11 +16,12 @@ def init_application():
     db.init_app(application)
     from .authenticator import authenticator
     from .home import home_page
-    from .profile import display_profile
+    from .profile import display_profile 
     from .search_engine import search_page
     from .splits import splits_page
     from .models import User, Exercises, Split
     from .exercise_landing import exercise_landing
+    from .start_exercise import start_exercise
     #if(database_exists('mysql+pymysql://tony:Aliame123@localhost/dumbbelldore')):
     #    print('Database already exists!')
     #else:
@@ -41,5 +42,6 @@ def init_application():
     application.register_blueprint(search_page, url_prefix='/') 
     application.register_blueprint(exercise_landing, url_prefix='/')
     application.register_blueprint(splits_page, url_prefix='/')
+    application.register_blueprint(start_exercise, url_prefix='/')
 
     return application
