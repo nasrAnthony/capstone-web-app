@@ -3,8 +3,6 @@ from flask_login import login_user, login_required, logout_user, current_user, l
 from . import db
 import requests
 
-
-
 exercise_landing = Blueprint('exercise_landing', __name__)
 
 def send_script_request_to_pi(script_name):
@@ -23,11 +21,11 @@ def send_script_request_to_pi(script_name):
     #    return response.json().get("output", "No Output")
     #else:
     #    return response.json().get("output", "No Error")
-    
+
 @exercise_landing.route("/launch-exercise", methods=['GET', 'POST'])
 def exercise_landing_page():
-    if request.method == 'POST':
-        exercise_name = request.form['exercise_name']
-        send_script_request_to_pi(exercise_name)
     return render_template('exercise_landing.html')
+
+
+
 

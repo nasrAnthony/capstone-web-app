@@ -20,6 +20,7 @@ def init_application():
     from .search_engine import search_page
     from .models import User, Exercises, Workout
     from .exercise_landing import exercise_landing
+    from .start_exercise import start_exercise
     #if(database_exists('mysql+pymysql://tony:Aliame123@localhost/dumbbelldore')):
     #    print('Database already exists!')
     #else:
@@ -39,5 +40,6 @@ def init_application():
     application.register_blueprint(display_profile, url_prefix='/')
     application.register_blueprint(search_page, url_prefix='/') 
     application.register_blueprint(exercise_landing, url_prefix='/')
+    application.register_blueprint(start_exercise, url_prefix='/')
 
     return application
