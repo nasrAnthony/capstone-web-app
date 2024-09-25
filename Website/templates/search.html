@@ -40,7 +40,7 @@
               <h4 class="card-title">{{ exercise.name }}</h4>
               <p class="card-text">{{ exercise.description }}</p>
               <p class="card-text">{{ exercise.level }}</p>
-              <form action="/launch-exercise" method="POST">
+              <form action="/exercise" method="POST">
                 <input type="hidden" name="exercise_name" value="{{ exercise.name }}">
                 <button type="submit" class="btn btn-primary">Launch Exercise</button>
               </form>
