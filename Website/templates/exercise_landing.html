@@ -1,0 +1,38 @@
+{% extends "base.html" %} 
+{% block content %}
+<h1><strong>{{ exercise_name }}</strong></h1>
+
+<form action="/start" method="POST">
+    <input type="hidden" name="exercise_name" value="{{ exercise_name }}">
+
+    <div class="form-group">
+        <label for="delay">Delay (seconds): <span id="delayValue">0</span></label>
+        <input type="range" id="delay" name="delay" class="form-control-range" min="3" max="60" value="0" oninput="updateDelay(this.value)">
+    </div>
+
+    <div class="form-group">
+        <label for="duration">Time Duration (seconds): <span id="durationValue">15</span></label>
+        <input type="range" id="duration" name="duration" class="form-control-range" min="1" max="300" value="30" oninput="updateDuration(this.value)">
+    </div>
+
+    <div class="form-group">
+        <label for="animate">Animate:</label>
+        <input type="checkbox" id="animate" name="animate">
+    </div>
+
+    <button type="submit" class="btn btn-primary">Start exercise</button>
+</form>
+
+<div style="padding-top: 20px;"></div>
+
+<script>
+    function updateDelay(value) {
+        document.getElementById('delayValue').innerText = value;
+    }
+
+    function updateDuration(value) {
+        document.getElementById('durationValue').innerText = value;
+    }
+</script>
+
+{% endblock %}

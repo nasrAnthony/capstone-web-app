@@ -1,0 +1,216 @@
+{% extends "base.html" %}
+
+{% block title %}
+Create Split
+{% endblock %}
+
+{% block content %}
+  <h1>Create Your Workout Split</h1>
+
+  <!-- Main container -->
+  <div class="split-container">
+    
+    <!-- Left side: Exercises -->
+    <section class="exercises">
+      <h2>Exercises</h2>
+      <div class="exercise" draggable="true" ondragstart="drag(event)" id="shoulder_press">
+        <img src="{{ url_for('static', filename='images/shoulder_press.png') }}" alt="Shoulder Press" class="exercise-img">
+        <div class="exercise-info">
+          <h3>Shoulder Press</h3>
+        </div>
+      </div>
+      <div class="exercise" draggable="true" ondragstart="drag(event)" id="chest_press">
+        <img src="{{ url_for('static', filename='images/chest_press.png') }}" alt="Chest Press" class="exercise-img">
+        <div class="exercise-info">
+          <h3>Chest Press</h3>
+        </div>
+      </div>
+      <!-- Add more exercises here as needed -->
+    </section>
+
+    <!-- Right side: Days of the week -->
+    <section class="split-grid">
+      <div class="grid-container">
+        {% for day in ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'] %}
+        <div class="grid-item" ondrop="drop(event)" ondragover="allowDrop(event)">
+          <h4>{{ day }}</h4>
+          <div class="exercise-list" id="{{ day }}-list">
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Buttons -->
+  <div class="button-container">
+    <button onclick="resetGrid()">Reset Grid</button>
+    <button onclick="submitSplit()">Create Split</button>
+  </div>
+
+  <!-- Add custom JavaScript for drag and drop functionality -->
+  <script>
+    function allowDrop(ev) {
+      ev.preventDefault();
+    }
+
+    function drag(ev) {
+      ev.dataTransfer.setData("text", ev.target.id);
+    }
+
+    function drop(ev) {
+      ev.preventDefault();
+      ev.stopPropagation(); // Stop event from propagating multiple times
+
+      // Find the correct exercise-list div (the valid drop target)
+      var exerciseList = ev.target.querySelector('.exercise-list') || ev.target.closest('.exercise-list');
+
+      if (!exerciseList) {
+          console.log('Drop target is not a valid exercise-list.');
+          return;
+      }
+
+      // Get the ID of the dragged element (exercise)
+      var data = ev.dataTransfer.getData("text");
+
+      // Debugging: log current children in exerciseList
+      console.log('Before append, exerciseList children:', exerciseList.children.length);
+
+      // Clone the dragged element
+      var exercise = document.getElementById(data).cloneNode(true);
+
+      // Remove the draggable attribute so it won't be dragged again
+      exercise.setAttribute("draggable", "false");
+
+      // Add the exercise-info class if not already there (if necessary)
+      //exercise.classList.add('exercise-info');
+
+      // Create a wrapper for the exercise and add a remove button (optional)
+      var exerciseWrapper = document.createElement('div');
+      exerciseWrapper.className = 'exercise-wrapper';
+      exerciseWrapper.appendChild(exercise);
+
+      // Add garbage icon for removing the exercise
+      var garbageIcon = document.createElement('span');
+      garbageIcon.innerHTML = '🗑️';
+      garbageIcon.className = 'garbage-icon';
+      garbageIcon.onclick = function() {
+          exerciseWrapper.remove();  // Remove the exercise when garbage icon is clicked
+      };
+
+      // Append garbage icon to the wrapper
+      exerciseWrapper.appendChild(garbageIcon);
+
+      // Append the exercise wrapper to the exercise-list
+      exerciseList.appendChild(exerciseWrapper);
+
+      // Debugging: log current children after append
+      console.log('After append, exerciseList children:', exerciseList.children.length);
+  }
+
+
+
+
+    function submitSplit() {
+      const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+      let splitData = {};
+      days.forEach(function(day) {
+          let exercises = [];
+          var id = day + '-split';
+          const exerciseList = document.getElementById(day + '-list').getElementsByClassName('exercise-info');
+          for (let i = 0; i < exerciseList.length; i++) {
+              exercises.push(exerciseList[i].innerText.trim());
+          }
+          splitData[day] = exercises;
+      });
+
+      // Send the splitData as JSON to the server
+      console.log(splitData);  // Debug: Check the structure in the console
+
+      // Send the data to the '/create_splits' route
+      fetch('/create_splits', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(splitData),
+      }).then(response => {
+          if (response.ok) {
+              alert('Split created successfully!');
+              window.location.href = '/splits';  // Redirect after success
+          } else {
+              alert('Error creating split.');
+          }
+      });
+  }
+  </script>
+
+  <!-- Add some basic styles for the layout -->
+  <style>
+    .split-container {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .exercises {
+      width: 30%;
+      padding: 10px;
+      border: 1px solid #ccc;
+    }
+
+    .split-grid {
+      width: 60%;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .grid-item {
+      padding: 10px;
+      border: 1px solid #ccc;
+      min-height: 100px;
+      background-color: #f9f9f9;
+    }
+
+    .exercise {
+      display: flex;
+      margin-bottom: 10px;
+    }
+
+    .exercise-img {
+      width: 50px;
+      height: 50px;
+      margin-right: 10px;
+    }
+
+    .exercise-wrapper {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .garbage-icon {
+      cursor: pointer;
+      font-size: 18px;
+      margin-left: 10px;
+    }
+
+    .button-container {
+      margin-top: 20px;
+    }
+
+    button {
+      margin-right: 10px;
+      padding: 10px 20px;
+    }
+  </style>
+{% endblock %}

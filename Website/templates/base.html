@@ -25,6 +25,7 @@
           <li><a href="{{ url_for('authenticator.sign_up') }}">Sign Up</a></li>
           <li><a href="/logout">Logout</a></li>
           <li><a href="{% if session['userType'] == 'authenticated' %}/search{% else %}/login{% endif %}">Search</a></li>
+          <li><a href="{% if session['userType'] == 'authenticated' %}/splits{% else %}/login{% endif %}">My Split</a></li>
           <li><a href="{% if session['userType'] == 'authenticated' %}/profile{% else %}/login{% endif %}">My Profile</a></li>
         </ul>
       </div>

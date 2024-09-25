@@ -8,7 +8,7 @@ db = mysql.connector.connect(
 
 cursor = db.cursor()
 #run this script once, upon running it. Comment the line below!
-cursor.execute("CREATE DATABASE dumbbellDore") #DONT UNCOMMENT THIS LINE, WILL CREATE DB AGAIN, MAY WIPE DATA. 
+#cursor.execute("CREATE DATABASE dumbbellDore") #DONT UNCOMMENT THIS LINE, WILL CREATE DB AGAIN, MAY WIPE DATA. 
 
 #verification
 cursor.execute("SHOW DATABASES")

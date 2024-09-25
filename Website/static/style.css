@@ -1,16 +1,27 @@
 @import 'https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap';
+
 * {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
 }
+
 body {
   font-family: 'Roboto', sans-serif;
   font-size: 0.925rem;
+  background-color: #1e1e1e; /* Very dark grey background */
+  color: #e0e0e0; /* Light grey text color */
 }
+
 a {
   text-decoration: none;
+  color: #f7f7f7; /* Very light grey link color */
 }
+
+a:hover {
+  color: #ffd54f; /* Light yellow hover color */
+}
+
 .container {
   width: 1170px;
   position: relative;
@@ -19,6 +30,7 @@ a {
   padding-left: 15px;
   padding-right: 15px;
 }
+
 .navbar, .navbar > .container {
   width: 100%;
   display: flex;
@@ -26,17 +38,21 @@ a {
   align-items: center;
   justify-content: space-between;
 }
+
 @media (max-width: 768px) {
   .navbar, .navbar > .container {
     display: block;
   }
 }
+
 .navbar {
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  background-color: #fff;
+  background: linear-gradient(90deg, #fbc02d, #ffeb3b); /* Gradient from light yellow to a deeper yellow */
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
   padding: 1rem 1.15rem;
-  border-bottom: 1px solid #eceef3;
+  border-bottom: 1px solid #e0e0e0; /* Light grey border */
 }
+
+/* Media queries for responsive container widths */
 @media (min-width: 576px) {
   .navbar .container {
     max-width: 540px;
@@ -53,19 +69,16 @@ a {
   }
 }
 @media (min-width: 1200px) {
-  /*
-   |-----------------------------------
-   | Start navbar logo or brand etc..
-   |-----------------------------------
-   */
   .navbar .container {
     max-width: 1140px;
   }
 }
+
 .navbar .navbar-header {
   display: flex;
   align-items: center;
 }
+
 @media (max-width: 768px) {
   .navbar .navbar-header {
     width: 100%;
@@ -75,50 +88,54 @@ a {
     flex-direction: row-reverse;
   }
 }
+
 .navbar .navbar-header .navbar-toggler {
   cursor: pointer;
   border: none;
   display: none;
   outline: none;
 }
+
 @media (max-width: 768px) {
   .navbar .navbar-header .navbar-toggler {
     display: block;
   }
 }
+
 .navbar .navbar-header .navbar-toggler span {
   height: 2px;
   width: 22px;
-  background-color: #929aad;
+  background-color: #1e1e1e; /* Dark grey color for toggler bars */
   display: block;
 }
+
 .navbar .navbar-header .navbar-toggler span:not(:last-child) {
   margin-bottom: 0.2rem;
 }
+
 .navbar .navbar-header > a {
   font-weight: 500;
-  color: #3c4250;
-  /*
-   |-----------------------------------
-   | Start navbar menu
-   |-----------------------------------
-   */
+  color: #1e1e1e; /* Dark grey text color */
 }
+
 .navbar .navbar-menu {
   display: flex;
   align-items: center;
   flex-basis: auto;
   flex-grow: 1;
 }
+
 @media (max-width: 768px) {
   .navbar .navbar-menu {
     display: none;
     text-align: center;
   }
 }
+
 .navbar .navbar-menu.active {
   display: flex !important;
 }
+
 .navbar .navbar-menu .navbar-nav {
   margin-left: auto;
   flex-direction: row;
@@ -127,37 +144,43 @@ a {
   margin-bottom: 0;
   list-style: none;
 }
+
 @media (max-width: 768px) {
   .navbar .navbar-menu .navbar-nav {
     width: 100%;
     display: block;
-    border-top: 1px solid #EEE;
+    border-top: 1px solid #e0e0e0;
     margin-top: 1rem;
   }
 }
+
 .navbar .navbar-menu .navbar-nav > li > a {
-  color: #3c4250;
+  color: #1e1e1e; /* Dark grey text color */
   text-decoration: none;
   display: inline-block;
   padding: 0.5rem 1rem;
 }
+
 .navbar .navbar-menu .navbar-nav > li > a:hover {
-  color: #66f;
+  color: #ffd54f; /* Light yellow hover color */
 }
+
 @media (max-width: 768px) {
   .navbar .navbar-menu .navbar-nav > li > a {
-    border-bottom: 1px solid #eceef3;
+    border-bottom: 1px solid #e0e0e0;
   }
 }
+
 .navbar .navbar-menu .navbar-nav > li.active a {
-  color: #66f;
+  color: #ffd54f; /* Light yellow active color */
 }
+
 .navbar .navbar-menu .navbar-nav .navbar-dropdown .dropdown {
   list-style: none;
   position: absolute;
   top: 150%;
   left: 0;
-  background-color: #fff;
+  background-color: #ffffff; /* White background for dropdown */
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
   min-width: 160px;
@@ -168,39 +191,90 @@ a {
   border-radius: 0.75rem;
   display: none;
 }
+
 @media (max-width: 768px) {
   .navbar .navbar-menu .navbar-nav .navbar-dropdown .dropdown {
     position: relative;
     box-shadow: none;
   }
 }
+
 .navbar .navbar-menu .navbar-nav .navbar-dropdown .dropdown li a {
-  color: #3c4250;
+  color: #333333; /* Dark grey text color for dropdown items */
   padding: 0.25rem 1rem;
   display: block;
 }
+
 .navbar .navbar-menu .navbar-nav .navbar-dropdown .dropdown.show {
   display: block !important;
 }
+
 .navbar .navbar-menu .navbar-nav .dropdown > .separator {
   height: 1px;
   width: 100%;
   margin-top: 9px;
   margin-bottom: 9px;
-  background-color: #eceef3;
+  background-color: #e0e0e0; /* Light grey separator */
 }
+
 .navbar .navbar-dropdown {
   position: relative;
 }
+
 .navbar .navbar-header > a span {
-  color: #66f;
+  color: #ea00ff; /* dore part of title header*/ 
 }
+
 .navbar .navbar-header h4 {
   font-weight: 500;
   font-size: 1.25rem;
 }
+
 @media (max-width: 768px) {
   .navbar .navbar-header h4 {
     font-size: 1.05rem;
   }
 }
+
+.exercises {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  padding: 2rem;
+  background-color: #2e2e2e; /* Darker grey background */
+}
+
+.exercise {
+  background-color: #333333; /* Slightly lighter grey for boxes */
+  border-radius: 8px;
+  overflow: hidden;
+  width: 250px; /* Adjust size as needed */
+  margin: 1rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s;
+}
+
+.exercise:hover {
+  transform: scale(1.05); /* Slight zoom effect on hover */
+}
+
+.exercise-img {
+  width: 100%;
+  height: auto;
+}
+
+.exercise-info {
+  padding: 1rem;
+  color: #e0e0e0; /* Light grey text color for readability */
+}
+
+.exercise-info h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  color: #fbc02d; /* Bright yellow text for titles */
+}
+
+.exercise-info p {
+  margin: 0.5rem 0 0;
+}
+
