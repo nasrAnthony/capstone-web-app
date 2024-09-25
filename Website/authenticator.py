@@ -65,6 +65,8 @@ def sign_up():
         user_id= str(uuid.uuid4())
         user_dor = str(date.today())
         address = request.form.get('address')
+        user_weight = request.form.get('weight')
+        user_height = request.form.get('height')
         potential_user = User.query.filter(or_(User.email == email, User.id == user_id)).first()
         validate_result = validate_user(email, 
                                         passwordv1,
@@ -83,8 +85,9 @@ def sign_up():
                     goal_weight= 0.0, 
                     goal_str = "", 
                     address = address,
-                    current_weight = 0.0, 
-                    password= passwordv1
+                    current_weight = user_weight, 
+                    current_height = user_height, 
+                    password= passwordv1, 
                 )
             try:
                 db.session.add(current_user)
