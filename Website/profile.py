@@ -23,13 +23,19 @@ def user_profile():
                     return redirect(url_for('profile.user_profile'))
                 except Exception:
                     flash('Faield to update your new goal weight, please try again!')
+                    
+    if current_user.splits:
+        split_content = current_user.splits[0].content
+    else: #current user has not created a split yet. 
+        split_content = None
 
     return render_template('profile.html', 
                             name = current_user.full_name, 
                             email= current_user.email, 
                             address= current_user.address, 
                             DOR= current_user.DOR, 
-                            goalWeight = current_user.goal_weight)
+                            goalWeight = current_user.goal_weight,
+                            workout_split= split_content)
 
 
 
