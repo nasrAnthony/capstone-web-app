@@ -11,7 +11,7 @@ def send_script_request_to_pi(exercise_name, delay, duration, animate_flag, exer
     #TODO: Get fields from the front end through user input.
     #TODO: Integrate different payload if split is launched instead of just one exercise.
     payload = {
-        "exerciseList": exercise_list,
+        "exercise_list": exercise_list,
         "script_name": exercise_name,
         "delay": delay, #s
         "time": duration, #s
