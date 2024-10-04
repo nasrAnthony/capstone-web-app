@@ -38,8 +38,9 @@ def send_script_request_to_pi(exercise_name, delay, duration, animate_flag, exer
         response = requests.post(url, json= payload)
     except Exception as e:
         print(f"Failed to communicate with pi server: {e}")
+    directory_path = os.path.join(os.getcwd(), "Website", "animation", "MotionCapture_Data")
     if response and response.status_code == 200:
-        file_name = "AnimationFileUnityData.txt"
+        file_name = os.path.join(directory_path, "AnimationFileUnityData.txt")
         with open(file_name, 'wb') as f:
             f.write(response.content)
         print(f"File saved as {file_name}")
