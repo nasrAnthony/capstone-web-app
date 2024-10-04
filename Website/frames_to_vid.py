@@ -16,7 +16,7 @@ def clean_folder(path):
 
 def build_video_from_frames(fps):
     print("Running video builder")
-    image_folder=os.getcwd() + '\\Website\\animation\\Animation Frames'
+    image_folder=os.getcwd() + '\\Website\\animation\\MotionCapture_Data\\Animation Frames'
     image_files = [os.path.join(image_folder,img)
                     for img in os.listdir(image_folder)
                     if img.endswith(".png")]
