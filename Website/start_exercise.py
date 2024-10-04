@@ -2,29 +2,51 @@ from flask import Blueprint, render_template, request, flash, redirect, url_for,
 from flask_login import login_user, login_required, logout_user, current_user, login_manager
 from . import db
 from datetime import datetime
+from .frames_to_vid import build_video_from_frames 
 import requests
+import subprocess
+import time
+import os
 
 start_exercise = Blueprint('start_exercise', __name__)
+batch_file_path = os.getcwd() + "\\Website\\run_unity_engine_no_engine.bat"
+
+def run_unity_animator():
+    try:
+        subprocess.run([batch_file_path], check= True)
+    except Exception as e:
+        print(f"Error executing the Unity Motion Capture animation project: {e}")
+
+    try:
+        time.sleep(10.0) #replace this with more flexible way of detecting unity completion
+        build_video_from_frames(fps= 30)
+    except Exception as e:
+        print(f"Error building video from frames in folder: {e}")
 
 def send_script_request_to_pi(exercise_name, delay, duration, animate_flag, exercise_list):
     url = "http://10.0.0.159:5000/run_script"
     #TODO: Get fields from the front end through user input.
     #TODO: Integrate different payload if split is launched instead of just one exercise.
     payload = {
-        "exerciseList": exercise_list,
+        "exercise_list": exercise_list,
         "script_name": exercise_name,
         "delay": delay, #s
         "time": duration, #s
-        "animate": animate_flag, #default,
+        "animate": animate_flag, #default
     }
     try:
         response = requests.post(url, json= payload)
     except Exception as e:
         print(f"Failed to communicate with pi server: {e}")
-    #if response.status_code == 200:
-    #    return response.json().get("output", "No Output")
-    #else:
-    #    return response.json().get("output", "No Error")
+    if response and response.status_code == 200:
+        file_name = "AnimationFileUnityData.txt"
+        with open(file_name, 'wb') as f:
+            f.write(response.content)
+        print(f"File saved as {file_name}")
+        if animate_flag:
+            run_unity_animator()
+    else:
+        return response.json().get("output", "Error, no response from pi server")
 
 @start_exercise.route("/start", methods=["GET", "POST"])
 def start_page():
@@ -37,6 +59,7 @@ def start_page():
         print(exercise_name, exercise_delay, exercise_duration, exercise_animate)
         #wrap in try to not crash website... 
         send_script_request_to_pi(exercise_name, exercise_delay, exercise_duration, exercise_animate, [])
+        
     return render_template('start_exercise.html')
 
 
