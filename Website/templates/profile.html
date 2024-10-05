@@ -6,7 +6,7 @@
     /* Add the workout split and card CSS here */
     .workout-split {
         padding: 20px;
-        background-color: #f9f9f9;
+        background-color: #333333; /* Changed to grey */
         border-radius: 10px;
         margin-top: 20px;
         text-align: center;
@@ -17,7 +17,7 @@
         gap: 20px;
     }
     .workout-card {
-        background-color: #fff;
+        background-color: #444444; /* Changed to a darker grey for the cards */
         border-radius: 10px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         padding: 20px;
@@ -29,7 +29,7 @@
     .workout-card h3 {
         font-size: 18px;
         margin-bottom: 10px;
-        color: #333;
+        color: #e0e0e0; /* Light grey for heading */
     }
     .exercises .exercise-item, .rest-day {
         font-size: 16px;
@@ -37,19 +37,20 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        color: #e0e0e0; /* Light grey for exercise text */
     }
     .exercises .exercise-item i, .rest-day i {
         margin-right: 8px;
         color: #ff6347;
     }
     .workout-card:nth-child(odd) {
-        background-color: #e3f2fd;
+        background-color: #555555; /* A different shade of grey for odd cards */
     }
     .workout-card:nth-child(even) {
-        background-color: #e8f5e9;
+        background-color: #666666; /* A different shade of grey for even cards */
     }
     .no-split-message {
-        color: #000000;
+        color: #ffffff; /* White for no split message */
         font-size: 20px;
         margin-top: 20px;
     }
@@ -76,17 +77,12 @@
     .launch-split-btn:hover {
         background-color: #ffe347;
         color: white;
-        padding: 10px 20px;
-        margin-top: 10px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        font-size: 16px;
     }
     .create-split-btn:hover {
         background-color: #eeff00;
     }
 </style>
+
 
 <!-- Profile Details -->
 <div style="padding-top: 20px;"></div>
