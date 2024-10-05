@@ -14,16 +14,17 @@ def clean_folder(path):
         if item_path.endswith('.png'):
             os.remove(item_path)
 
-def build_video_from_frames(fps):
+def build_video_from_frames(fps) -> str:
     print("Running video builder")
     image_folder=os.getcwd() + '\\Website\\animation\\MotionCapture_Data\\Animation Frames'
     image_files = [os.path.join(image_folder,img)
                     for img in os.listdir(image_folder)
                     if img.endswith(".png")]
     clip = moviepy.video.io.ImageSequenceClip.ImageSequenceClip(image_files, fps=fps)
-    time_now = datetime.now().strftime("%Y%m%d_%H%M%S") 
-    clip.write_videofile(os.getcwd() + f'\\Website\\animation\\Animation Results\\animation_{time_now}_.mp4')
+    time_now = datetime.now().strftime("%Y%m%d_%H%M%S")
+    video_name = f"animation_{time_now}_.mp4"
+    clip.write_videofile(os.getcwd() + f'\\Website\\static\\Animation Results\\animation_{time_now}_.mp4')
     clean_folder(image_folder)
-
+    return video_name
 #if __name__ == "__main__":
 #    build_video_from_frames(fps= 30)

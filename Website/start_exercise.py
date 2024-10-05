@@ -10,6 +10,7 @@ import os
 
 start_exercise = Blueprint('start_exercise', __name__)
 batch_file_path = os.getcwd() + "\\Website\\run_unity_engine_no_engine.bat"
+video_name = None
 
 def run_unity_animator():
     try:
@@ -19,9 +20,11 @@ def run_unity_animator():
 
     try:
         time.sleep(10.0) #replace this with more flexible way of detecting unity completion
-        build_video_from_frames(fps= 30)
+        vid_name =  build_video_from_frames(fps= 30)
+        return vid_name
     except Exception as e:
         print(f"Error building video from frames in folder: {e}")
+        return None
 
 def send_script_request_to_pi(exercise_name, delay, duration, animate_flag, exercise_list):
     url = "http://10.0.0.159:5000/run_script"
@@ -45,7 +48,8 @@ def send_script_request_to_pi(exercise_name, delay, duration, animate_flag, exer
             f.write(response.content)
         print(f"File saved as {file_name}")
         if animate_flag:
-            run_unity_animator()
+            video_name = run_unity_animator()
+            return video_name
     else:
         return response.json().get("output", "Error, no response from pi server")
 
@@ -59,9 +63,9 @@ def start_page():
         exercise_name = request.form['exercise_name']
         print(exercise_name, exercise_delay, exercise_duration, exercise_animate)
         #wrap in try to not crash website... 
-        send_script_request_to_pi(exercise_name, exercise_delay, exercise_duration, exercise_animate, [])
+        video_name = send_script_request_to_pi(exercise_name, exercise_delay, exercise_duration, exercise_animate, [])
         
-    return render_template('start_exercise.html')
+    return render_template('start_exercise.html', vid_name= video_name)
 
 
 @start_exercise.route("/start-split", methods=["GET", "POST"])
