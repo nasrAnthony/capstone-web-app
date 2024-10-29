@@ -6,5 +6,18 @@
         <source src="{{ url_for('static', filename='Animation Results/' + vid_name) }}" type="video/mp4">
         Your browser does not support the video tag.
     </video>
+
+    <h2>Bad Form Screenshots</h2>
+    {% if png_files %}
+        <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+            {% for file in png_files %}
+                <div style="flex: 0 0 30%;">
+                    <img src="{{ url_for('static', filename='Snapshots/' + file) }}" alt="Bad Form Screenshot" style="width: 100%; height: auto;">
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>No bad form was detected during your workout.</p>
+    {% endif %}
 </body>
 {% endblock %}

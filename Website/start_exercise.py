@@ -7,6 +7,8 @@ import requests
 import subprocess
 import time
 import os
+import zipfile
+from io import BytesIO
 
 start_exercise = Blueprint('start_exercise', __name__)
 batch_file_path = os.getcwd() + "\\Website\\run_unity_engine_no_engine.bat"
@@ -56,11 +58,21 @@ def send_script_request_to_pi(exercise_name, delay, duration, animate_flag, exer
     except Exception as e:
         print(f"Failed to communicate with pi server: {e}")
     directory_path = os.path.join(os.getcwd(), "Website", "animation", "MotionCapture_Data")
+    image_path = os.path.join(os.getcwd(), "Website", "static", "Snapshots")
+    os.makedirs(image_path, exist_ok=True)
     if response and response.status_code == 200:
-        file_name = os.path.join(directory_path, "AnimationFileUnityData.txt")
-        with open(file_name, 'wb') as f:
-            f.write(response.content)
-        print(f"File saved as {file_name}")
+        with zipfile.ZipFile(BytesIO(response.content)) as z:
+            for file in z.namelist():
+                if file=="AnimationFileUnityData.txt":
+                    file_name = os.path.join(directory_path, "AnimationFileUnityData.txt")
+                    with open(file_name, 'wb') as f:
+                        f.write(z.read(file))
+                    print(f"File saved as {file_name}")
+                elif file.endswith(".png"):
+                    png_path = os.path.join(image_path, os.path.basename(file))
+                    with open(png_path, 'wb') as f:
+                        f.write(z.read(file))
+                    print(f"Snapshot extracted to {png_path}")
         with open(file_name, 'r') as f:
             line_count = len(f.readlines())
         if animate_flag:
@@ -77,11 +89,14 @@ def start_page():
         exercise_duration = request.form['duration']
         exercise_animate = request.form.get('animate') == 'on' #true if checked, flase otherwise.
         exercise_name = request.form['exercise_name']
-        print(exercise_name, exercise_delay, exercise_duration, exercise_animate)
+        #print(exercise_name, exercise_delay, exercise_duration, exercise_animate)
         #wrap in try to not crash website... 
         video_name = send_script_request_to_pi(exercise_name, exercise_delay, exercise_duration, exercise_animate, [])
+        snapshots_dir = os.path.join(os.getcwd(),'Website', 'static', 'Snapshots')
+        # Get list of PNG files in the folder
+        png_files = [file for file in os.listdir(snapshots_dir) if file.endswith('.png')]
         
-    return render_template('start_exercise.html', vid_name= video_name)
+    return render_template('start_exercise.html', vid_name= video_name, png_files= png_files)
 
 
 @start_exercise.route("/start-split", methods=["GET", "POST"])
