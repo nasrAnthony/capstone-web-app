@@ -1,8 +1,5 @@
 <!DOCTYPE html>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<!--link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
-
-<!-- Load your custom stylesheet last -->
 <link rel="stylesheet" href="./static/style.css">
 
 <nav class="navbar">
@@ -15,7 +12,7 @@
           <span></span>
         </button>
         <a href="{% if session['userType'] == 'authenticated' %}/home{% else %}/login{% endif %}">
-          <h4>Dumbbell<span>dore</span></h4>
+          <h4 style="color: black;">Dumbbell<span style="color: white;">dore</span></h4>
         </a>
       </div>
   
@@ -30,31 +27,33 @@
         </ul>
       </div>
     </div>
-  </nav>
-  {% with messages = get_flashed_messages(with_categories=true) %}
-  {% if messages %}
-      {% for category, message in messages %}
-          {% if category == 'error' %}
-          <div class="alert alert-danger alert-dismissible fade show" role="alert">
-              {{ message }}
-              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-              </button>
-          </div>
-          {% else %}
-          <div class="alert alert-success alert-dismissible fade show" role="alert">
-              {{ message }}
-              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-              </button>
-          </div>
-          {% endif %}
-      {% endfor %}
-  {% endif %}
-  {% endwith %}
-  <div class="container">
+</nav>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+    {% for category, message in messages %}
+        {% if category == 'error' %}
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        {% else %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        {% endif %}
+    {% endfor %}
+{% endif %}
+{% endwith %}
+
+<div class="container">
     {% block content %}
     {% endblock %}
-  </div>
-<!-- Load your JavaScript file -->
+</div>
+
 <script src="static/script.js"></script>
