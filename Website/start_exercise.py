@@ -7,6 +7,7 @@ import requests
 import subprocess
 import time
 import os
+import json
 import zipfile
 from io import BytesIO
 
@@ -68,6 +69,11 @@ def send_script_request_to_pi(exercise_name, delay, duration, animate_flag, exer
                     with open(file_name, 'wb') as f:
                         f.write(z.read(file))
                     print(f"File saved as {file_name}")
+                elif file == "bad_form_data.json":
+                    file_name = os.path.join(image_path, "bad_form_data.json")
+                    with open(file_name, 'wb') as j:
+                        j.write(z.read(file))
+                    print(f"JSON saved as {file_name}")
                 elif file.endswith(".png"):
                     png_path = os.path.join(image_path, os.path.basename(file))
                     with open(png_path, 'wb') as f:
@@ -95,8 +101,13 @@ def start_page():
         snapshots_dir = os.path.join(os.getcwd(),'Website', 'static', 'Snapshots')
         # Get list of PNG files in the folder
         png_files = [file for file in os.listdir(snapshots_dir) if file.endswith('.png')]
-        
-    return render_template('start_exercise.html', vid_name= video_name, png_files= png_files)
+        #get bad form desciptions from json
+        descriptions = {}
+        json_file_path = os.path.join(snapshots_dir, "bad_form_data.json")
+        if os.path.exists(json_file_path):
+            with open(json_file_path, 'r') as f:
+                descriptions = json.load(f)
+    return render_template('start_exercise.html', vid_name= video_name, png_files= png_files, descriptions=descriptions)
 
 
 @start_exercise.route("/start-split", methods=["GET", "POST"])

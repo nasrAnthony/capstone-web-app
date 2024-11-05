@@ -11,8 +11,11 @@
     {% if png_files %}
         <div style="display: flex; flex-wrap: wrap; gap: 10px;">
             {% for file in png_files %}
-                <div style="flex: 0 0 30%;">
-                    <img src="{{ url_for('static', filename='Snapshots/' + file) }}" alt="Bad Form Screenshot" style="width: 100%; height: auto;">
+                <div style="flex: 0 0 30%; position: relative;">
+                    <img src="{{ url_for('static', filename='Snapshots/' + file) }}" 
+                         alt="Bad Form Screenshot" 
+                         style="width: 100%; height: auto;" 
+                         title="{{ descriptions[file] if file in descriptions else 'No description available' }}">
                 </div>
             {% endfor %}
         </div>
